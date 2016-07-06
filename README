@@ -1,5 +1,9 @@
 To install and run 
 
+	git clone https://github.com/dustinbrink/backbone-skeleton.git
+
+	cd backbone-skeleton/
+
 	npm install && npm run watch
 
 go to 
@@ -8,3 +12,5 @@ go to
 for tests go to
 	http://localhost:8080/test/
 
+for Browser-Sync interface go to
+	http://localhost:3001/
