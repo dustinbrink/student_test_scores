@@ -1,0 +1,114 @@
+{
+  "name": "backbone_skeleton",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "backbone": "^1.3.3",
+    "browser-sync": "^2.13.0",
+    "browserify-shim": "^3.8.12",
+    "chai": "^3.5.0",
+    "glob": "^7.0.5",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-inject": "^4.1.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-mocha-phantomjs": "^0.11.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.4",
+    "gulp-util": "^3.0.7",
+    "jquery": "^3.0.0",
+    "jshint-stylish": "^2.2.0",
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.4",
+    "underscore": "^1.8.3",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "jquery": "$",
+    "underscore": "_",
+    "backbone": {
+      "depends": "jquery",
+      "exports": "Backbone"
+    }
+  },
+  "jshintConfig": {
+    "curly": true,
+    "eqeqeq": true,
+    "immed": false,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "sub": true,
+    "undef": true,
+    "boss": true,
+    "eqnull": true,
+    "browser": true,
+    "globals": {
+      "require": true,
+      "jQuery": true,
+      "Backbone": true,
+      "_": true,
+      "module": true
+    }
+  },
+  "jshintTestConfig": {
+    "curly": true,
+    "eqeqeq": true,
+    "immed": false,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "sub": true,
+    "undef": true,
+    "boss": true,
+    "eqnull": true,
+    "browser": true,
+    "globals": {
+      "require": true,
+      "describe": true,
+      "before": true,
+      "it": true,
+      "after": true
+    }
+  },
+  "gulpPaths": {
+    "src": {
+      "base": "src",
+      "dest": "public/",
+      "indexHTML": "index.html",
+      "indexJS": "index.js"
+    },
+    "test": {
+      "base": "test",
+      "dest": "public/test/",
+      "indexHTML": "index.html",
+      "mocha": [
+        "node_modules/mocha/mocha.css",
+        "node_modules/mocha/mocha.js"
+      ]
+    },
+    "build": {
+      "jsDir": "js",
+      "cssDir": "css",
+      "libDir": "lib"
+    }
+  },
+  "scripts": {
+    "injectIndex": "node node_modules/gulp/bin/gulp.js injectIndex",
+    "injectIndex-test": "node node_modules/gulp/bin/gulp.js injectIndex-test",
+    "build-all": "node node_modules/gulp/bin/gulp.js build-all",
+    "clean": "node node_modules/gulp/bin/gulp.js clean",
+    "test": "node node_modules/gulp/bin/gulp.js test",
+    "lint": "node node_modules/gulp/bin/gulp.js lint",
+    "lint-test": "node node_modules/gulp/bin/gulp.js lint-test",
+    "watch": "node node_modules/gulp/bin/gulp.js watch",
+    "stop-win": "taskkill /f /im node.exe"
+  }
+}
