@@ -1,4 +1,4 @@
-To install and run logrhythm_exercise
+To install and run 
 
 	npm install && npm run watch
 
