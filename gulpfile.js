@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     clean = require('gulp-clean'),
     inject = require('gulp-inject'),
     jshint = require('gulp-jshint'),
+    gulpsync = require('gulp-sync')(gulp),
     sourcemaps = require('gulp-sourcemaps'),
     mochaPhantomJS = require('gulp-mocha-phantomjs'),
     source = require('vinyl-source-stream'),
@@ -45,7 +46,7 @@ gulp.task('clean', function() {
 });
 
 // Build all scripts
-gulp.task('browserify', ['lint', 'test'], function() {
+gulp.task('browserify', ['lint'], function() {
   var bundleStream = browserify({
     basedir: paths.src.base,
     entries: paths.src.indexJS,
@@ -125,17 +126,18 @@ gulp.task('lint-test', function() {
 gulp.task('test-phantom', function() {
   return gulp
     .src(paths.test.dest+'/'+paths.test.indexHTML)
-    .on('error', onError)
     .pipe(mochaPhantomJS({
-      reporter: 'spec'
-    }));
-});
-
-gulp.task('test-mochify', function() {
-  mochify('./test/*.js', {
-    reporter : 'tap',
-    cover    : true
-  }).bundle();
+      reporter: 'spec',
+      //suppressStdout: true,
+      suppressStderr: true,
+      mocha: {
+        //mocha options
+      },
+      phantomjs: {
+        useColors: true
+      }
+    }))
+    .on('error', onError);
 });
 
 // Inject source files into index.html
@@ -205,7 +207,7 @@ gulp.task('copy-mocha', [], function() {
 
 // Browser Sync webserver
 gulp.task('browser-sync', ['build-all'], function() {
-  browserSync.init({
+  return browserSync.init({
     server: {baseDir: paths.src.dest},
     port: 8080,
     logLevel: isDevelopment ? 'debug' : 'silent',
@@ -214,8 +216,8 @@ gulp.task('browser-sync', ['build-all'], function() {
 });
 
 // Watch for changes and lint, build,, run tests
-gulp.task('watch', ['browser-sync'], function() {
-  gulp.watch(paths.src.base+'/*.js', ['update-scripts']);
+gulp.task('watch', gulpsync.sync(['browser-sync', 'test']), function() {
+  gulp.watch(paths.src.base+'/**/*.js', ['update-scripts']);
   gulp.watch(paths.test.base+'/**/*.js', ['update-test']);
   gulp.watch(paths.test.base+'/**/*.html', ['injectIndex-test']);
   //gulp.watch(paths.src.dest+'**/*', ['test']);
@@ -223,6 +225,6 @@ gulp.task('watch', ['browser-sync'], function() {
 
 
 gulp.task('test', ['test-phantom']);
-gulp.task('update-scripts', ['browserify']);
-gulp.task('update-test', ['browserify-test']);
-gulp.task('build-all', ['injectIndex', 'injectIndex-test']);
+gulp.task('update-scripts', gulpsync.sync(['update-test', 'browserify']));
+gulp.task('update-test',  gulpsync.sync(['browserify-test', 'test']));
+gulp.task('build-all', gulpsync.sync(['clean', ['injectIndex', 'injectIndex-test']]));
