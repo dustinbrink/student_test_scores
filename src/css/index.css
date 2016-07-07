@@ -1,0 +1,17 @@
+#container {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 465px;
+    padding: 0;
+    overflow: auto;
+    border: 0;
+}
+
+.backgrid tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.backgrid tbody tr.failing-grade {
+	background-color: LightPink;
+}

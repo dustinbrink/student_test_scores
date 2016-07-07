@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     gulpsync = require('gulp-sync')(gulp),
     sourcemaps = require('gulp-sourcemaps'),
     mochaPhantomJS = require('gulp-mocha-phantomjs'),
+    cleanCSS = require('gulp-clean-css'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
     stylish = require('jshint-stylish'),
@@ -48,6 +49,7 @@ gulp.task('clean', function() {
 // Build all scripts
 gulp.task('browserify', ['lint'], function() {
   var bundleStream = browserify({
+    //transform: [hbsfy],
     basedir: paths.src.base,
     entries: paths.src.indexJS,
     insertGlobals: isDevelopment, 
@@ -87,8 +89,19 @@ gulp.task('browserify-test', ['lint-test'], function() {
     .pipe(sourcemaps.init({loadMaps: isDevelopment}))
     .pipe(uglify())
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(paths.test.dest))
-    .on('finish', browserSync.reload);
+    .pipe(gulp.dest(paths.test.dest));
+    //.on('finish', browserSync.reload);
+});
+
+// Minify and source map all css
+gulp.task('minify-css', function() {
+  return gulp.src(paths.src.base+'/**/*.css')
+  	.on('error', onError)
+		.pipe(sourcemaps.init())
+    .pipe(cleanCSS())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(paths.src.dest));
+
 });
 
 // Copy all other files to dist directly
@@ -141,8 +154,9 @@ gulp.task('test-phantom', function() {
 });
 
 // Inject source files into index.html
-gulp.task('injectIndex', ['browserify'], function() {
-  var path = paths.src.dest+paths.build.jsDir;
+gulp.task('injectIndex', ['browserify', 'minify-css'], function() {
+  var pathJS = paths.src.dest+paths.build.jsDir,
+  		pathCSS = paths.src.dest+paths.build.cssDir;
 
   return gulp
     .src(paths.src.base+'/'+paths.src.indexHTML)
@@ -150,8 +164,10 @@ gulp.task('injectIndex', ['browserify'], function() {
     
     // inject compiled source js
     .pipe(inject(
-      gulp.src([path+'/*.js', path+'/*.css'], {read:false}), {
-        ignorePath: paths.src.dest
+      gulp.src([pathJS+'/*.js', pathCSS+'/*.css'], {read:false}), {
+        ignorePath: paths.src.dest,
+        addPrefix: '.',
+        addRootSlash: false
     }))
 
     .pipe(gulp.dest(paths.src.dest));
@@ -209,8 +225,8 @@ gulp.task('copy-mocha', [], function() {
 gulp.task('browser-sync', ['build-all'], function() {
   return browserSync.init({
     server: {baseDir: paths.src.dest},
-    port: 8080,
-    logLevel: isDevelopment ? 'debug' : 'silent',
+    port: 8080
+    //logLevel: isDevelopment ? 'debug' : 'silent',
   });
   
 });
@@ -218,6 +234,8 @@ gulp.task('browser-sync', ['build-all'], function() {
 // Watch for changes and lint, build,, run tests
 gulp.task('watch', gulpsync.sync(['browser-sync', 'test']), function() {
   gulp.watch(paths.src.base+'/**/*.js', ['update-scripts']);
+  gulp.watch(paths.src.base+'/**/*.css', ['injectIndex']);
+  gulp.watch(paths.src.base+'/**/*.hbs', ['update-scripts']);
   gulp.watch(paths.test.base+'/**/*.js', ['update-test']);
   gulp.watch(paths.test.base+'/**/*.html', ['injectIndex-test']);
   //gulp.watch(paths.src.dest+'**/*', ['test']);
@@ -228,3 +246,4 @@ gulp.task('test', ['test-phantom']);
 gulp.task('update-scripts', gulpsync.sync(['update-test', 'browserify']));
 gulp.task('update-test',  gulpsync.sync(['browserify-test', 'test']));
 gulp.task('build-all', gulpsync.sync(['clean', ['injectIndex', 'injectIndex-test']]));
+//gulp.task('build-all', ['minify-css']);

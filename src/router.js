@@ -3,19 +3,22 @@ var jQuery = require('jquery');
 var _ = require('underscore');
 Backbone.$ = jQuery;
 
-var HomeView = require('./views/home');
+var Class = require('./collections/class');
+var ClassView = require('./views/class');
 
 module.exports = Backbone.Router.extend({
 
-    routes: {
-        "": "home",
-    },
+  routes: {
+		"": "home",
+  },
 
-    home: function () {
-        this.loadView(new HomeView());
-    },
+  home: function () {
+    this.loadView(new ClassView({
+    	collection: new Class()
+    }));
+  },
 
-    loadView : function(view) {
+  loadView : function(view) {
 		if(this.view) {
 			this.view.remove();
 		}
