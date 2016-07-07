@@ -10,7 +10,7 @@
 	var Student = require('../models/student');
 
 	module.exports = Backbone.Collection.extend({
-		url: '/test/class.json',
+		url: '/test/data/class.json',
 		model: Student,
 		comparator: 'testScore',
 		localStorage: new Backbone.LocalStorage("Class"),

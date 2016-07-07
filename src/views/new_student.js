@@ -13,18 +13,17 @@
 		
 		// where content will be rendered.
 		tagName: 'form',
-		className: 'new-student',
 
 		events: {
 			'submit': 'addStudent'
 		},
 
-		initialize: function(options){
+		initialize: function(options) {
 
 		},
 
 		// add new Student model to collection from inputs, and save
-		addStudent: function(e){
+		addStudent: function(e) {
 			// prevent default browser form submission
 			e.preventDefault();
 
@@ -55,7 +54,7 @@
 		},
 
 		// render template
-		render: function(){
+		render: function() {
 			this.$el.html(template());
 			this.formFocus();
 			return this;

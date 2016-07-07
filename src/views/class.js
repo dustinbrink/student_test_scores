@@ -53,7 +53,7 @@
 			sortType: 'toggle'
 		}],
 
-		initialize: function(options){
+		initialize: function(options) {
 			// init Backgrid subview
 			this.grid = new Backgrid.Grid({
 				row: GradedRow,
@@ -97,7 +97,7 @@
 		},
 
 		// on render this template
-		render: function(){
+		render: function() {
 			this.$el.html(template());
 			return this;
 		}
