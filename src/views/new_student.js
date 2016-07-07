@@ -27,7 +27,8 @@ module.exports = Backbone.View.extend({
 
     var student = new Student(this.formJSON());
     this.collection.add(student);
-    //student.save();
+    student.save();
+    //this.collection.save();
     this.formClear();
   },
 
@@ -43,11 +44,18 @@ module.exports = Backbone.View.extend({
   // clear user entered data from form
   formClear: function() {
     this.$el.trigger('reset');
+    this.formFocus();
+  },
+
+  // focus the first element of the form
+  formFocus: function() {
+     this.$el.find('input').first().focus();
   },
 
   // render template
   render: function(){
     this.$el.html(template());
+    this.formFocus();
     return this;
   }
 
