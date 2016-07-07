@@ -10,15 +10,19 @@ module.exports = Backbone.Model.extend({
   	lastName: "",
   	testScore: 0
   },
-  validate: function(attributes){
-  	if(attributes.testScore < 0 && attributes.testScore > 100) {
-  		return "Test Score is out of range, please enter a number between 0 - 100";
-  	}
-  	return true;
-  },
+  // validate: function(attributes){
+  // 	if(attributes.testScore < 0 && attributes.testScore > 100) {
+  // 		return "Test Score is out of range, please enter a number between 0 - 100";
+  // 	}
+  // 	return true;
+  // },
   initialize: function (data) {
     // ensure testScore really is a number, for avgerage calc
     this.set('testScore', parseFloat(this.get('testScore')) || this.defaults.testScore);
+    // this.on("change", function (model, options) {
+    // if (options && options.save === false) return;
+    //   model.save();
+    // });
   },
   failingGrade: function() {
     return this.get('testScore') < 65;
