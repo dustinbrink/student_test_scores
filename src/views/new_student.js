@@ -1,62 +1,66 @@
-var Backbone = require('backbone');
-var jQuery = require('jquery');
-var _ = require('underscore');
-Backbone.$ = jQuery;
+(function () {
+  'use strict';
 
-var template = require('../templates/new_student.hbs');
-var Student = require('../models/student');
+	var Backbone = require('backbone');
+	var jQuery = require('jquery');
+	var _ = require('underscore');
+	Backbone.$ = jQuery;
 
-module.exports = Backbone.View.extend({
-  
-  // where content will be rendered.
-  tagName: 'form',
-  className: 'new-student',
+	var template = require('../templates/new_student.hbs');
+	var Student = require('../models/student');
 
-  events: {
-    'submit': 'addStudent'
-  },
+	module.exports = Backbone.View.extend({
+	  
+	  // where content will be rendered.
+	  tagName: 'form',
+	  className: 'new-student',
 
-  initialize: function(options){
+	  events: {
+	    'submit': 'addStudent'
+	  },
 
-  },
+	  initialize: function(options){
 
-  // add new Student model to collection from inputs, and save
-  addStudent: function(e){
-    // prevent default browser form submission
-    e.preventDefault();
+	  },
 
-    var student = new Student(this.formJSON());
-    this.collection.add(student);
-    student.save();
-    //this.collection.save();
-    this.formClear();
-  },
+	  // add new Student model to collection from inputs, and save
+	  addStudent: function(e){
+	    // prevent default browser form submission
+	    e.preventDefault();
 
-  // serialize form inputs and convert to JSON
-  formJSON: function() {
-    var arr = this.$el.serializeArray();
-    return _(arr).reduce(function(acc, field) {
-      acc[field.name] = field.value;
-      return acc;
-    }, {});
-  },
+	    var student = new Student(this.formJSON());
+	    this.collection.add(student);
+	    student.save();
+	    this.formClear();
+	  },
 
-  // clear user entered data from form
-  formClear: function() {
-    this.$el.trigger('reset');
-    this.formFocus();
-  },
+	  // serialize form inputs and convert to JSON
+	  formJSON: function() {
+	    var arr = this.$el.serializeArray();
+	    return _(arr).reduce(function(acc, field) {
+	      acc[field.name] = field.value;
+	      return acc;
+	    }, {});
+	  },
 
-  // focus the first element of the form
-  formFocus: function() {
-     this.$el.find('input').first().focus();
-  },
+	  // clear user entered data from form
+	  formClear: function() {
+	    this.$el.trigger('reset');
+	    this.formFocus();
+	  },
 
-  // render template
-  render: function(){
-    this.$el.html(template());
-    this.formFocus();
-    return this;
-  }
+	  // focus the first element of the form
+	  formFocus: function() {
+	     this.$el.find('input').first().focus();
+	  },
 
-});
+	  // render template
+	  render: function(){
+	    this.$el.html(template());
+	    this.formFocus();
+	    return this;
+	  }
+
+	});
+
+})();

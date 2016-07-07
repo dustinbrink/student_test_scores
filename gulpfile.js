@@ -16,7 +16,7 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync').create(),
     packageJSON  = require('./package');
 
-var isDevelopment = true;
+var isDevelopment = false;
 var paths =  packageJSON.gulpPaths;
 var jshintConfig = packageJSON.jshintConfig;
 var jshintTestConfig = packageJSON.jshintTestConfig;
@@ -118,7 +118,7 @@ gulp.task('lint', function() {
   jshintConfig.devel = isDevelopment;
 
   return gulp
-    .src(paths.src.base+'/*.js', {base: paths.src.base})
+    .src(paths.src.base+'/**/*.js', {base: paths.src.base})
     .on('error', onError)
     .pipe(jshint(jshintConfig))
     .pipe(jshint.reporter(stylish));

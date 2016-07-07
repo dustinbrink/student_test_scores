@@ -1,28 +1,33 @@
-var Backbone = require('backbone');
-var jQuery = require('jquery');
-var _ = require('underscore');
-Backbone.$ = jQuery;
+(function () {
+  'use strict';
 
-var Class = require('./collections/class');
-var ClassView = require('./views/class');
+  var Backbone = require('backbone');
+  var jQuery = require('jquery');
+  var _ = require('underscore');
+  Backbone.$ = jQuery;
 
-module.exports = Backbone.Router.extend({
+  var Class = require('./collections/class');
+  var ClassView = require('./views/class');
 
-  routes: {
-		"": "home",
-  },
+  module.exports = Backbone.Router.extend({
 
-  home: function () {
-    this.loadView(new ClassView({
-    	collection: new Class()
-    }));
-  },
+    routes: {
+  		"": "home",
+    },
 
-  loadView : function(view) {
-		if(this.view) {
-			this.view.remove();
-		}
-		this.view = view;
-	}
+    home: function () {
+      this.loadView(new ClassView({
+      	collection: new Class()
+      }));
+    },
 
-});
+    loadView : function(view) {
+  		if(this.view) {
+  			this.view.remove();
+  		}
+  		this.view = view;
+  	}
+
+  });
+
+})();

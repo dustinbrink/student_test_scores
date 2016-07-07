@@ -58,11 +58,8 @@
     "eqnull": true,
     "browser": true,
     "globals": {
-      "require": true,
-      "jQuery": true,
-      "Backbone": true,
-      "_": true,
-      "module": true
+      "require": false,
+      "module": false
     }
   },
   "jshintTestConfig": {
