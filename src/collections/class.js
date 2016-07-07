@@ -14,18 +14,24 @@
 		model: Student,
 		comparator: 'testScore',
 		localStorage: new Backbone.LocalStorage("Class"),
+
+		// return average test score of all students
 		avgTestScore: function() {
 			var sum = this.reduce(function(total, student) {
 				return total + student.get('testScore');
 			}, 0);
 			return sum / this.size();
 		},
+
+		// return minimum test score from all students
 		minTestScore: function() {
 			var minStudent = this.min(function(student) {
 				return student.get('testScore');
 			});
 			return this.size() ? minStudent.get('testScore') : 0;
 		},
+
+		// return maximum test score from all students 
 		maxTestScore: function() {
 			var maxStudent = this.max(function(student) {
 				return student.get('testScore');

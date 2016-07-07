@@ -31,3 +31,8 @@
 .backgrid th.testScore {
 	text-align: right;
 }
+
+.footer {
+	padding-top: 50px;
+	float: right;
+}

@@ -32,6 +32,7 @@
 
 		// local events
 		events: {
+			'click button.clear': 'clearData'
 		},
 
 		// Backgrid columns
@@ -78,6 +79,14 @@
 
 			// fetch collection from remote
 			this.collection.fetch({reset: true});
+		},
+
+		// delete all current class data
+		clearData: function() {
+			// destroy on a clone of the collection to prevent out of range errors
+			this.collection.chain().clone().each(function(model) {
+				model.destroy();
+			});
 		},
 
 		// render all sub-views

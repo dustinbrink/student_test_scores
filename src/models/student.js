@@ -21,7 +21,7 @@
 			this.set('testScore', parseFloat(this.get('testScore')) || this.defaults.testScore);
 			
 			// save model on any model change
-			this.listenTo(this, 'change', function (model, options) {
+			this.listenTo(this, 'change', function(model, options) {
 				if (options && options.save === false)  {
 					return;
 				}
