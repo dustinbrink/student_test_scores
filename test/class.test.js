@@ -11,13 +11,13 @@ describe('Calss Collection', function (){
 		];
 
 		before(function(){
-    	studentClass = new Class(testData);
-    });
+			studentClass = new Class(testData);
+		});
 
-    it('should have correct size', function() {
-    	studentClass.size().should.be.equal(testData.length);
-    });
-    
-  });
+		it('should have correct size', function() {
+			studentClass.size().should.be.equal(testData.length);
+		});
+	
+	});
 
 });

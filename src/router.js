@@ -1,33 +1,33 @@
 (function () {
-  'use strict';
+	'use strict';
 
-  var Backbone = require('backbone');
-  var jQuery = require('jquery');
-  var _ = require('underscore');
-  Backbone.$ = jQuery;
+	var Backbone = require('backbone');
+	var jQuery = require('jquery');
+	var _ = require('underscore');
+	Backbone.$ = jQuery;
 
-  var Class = require('./collections/class');
-  var ClassView = require('./views/class');
+	var Class = require('./collections/class');
+	var ClassView = require('./views/class');
 
-  module.exports = Backbone.Router.extend({
+	module.exports = Backbone.Router.extend({
 
-    routes: {
-  		"": "home",
-    },
+		routes: {
+			"": "home",
+		},
 
-    home: function () {
-      this.loadView(new ClassView({
-      	collection: new Class()
-      }));
-    },
+		home: function () {
+			this.loadView(new ClassView({
+				collection: new Class()
+			}));
+		},
 
-    loadView : function(view) {
-  		if(this.view) {
-  			this.view.remove();
-  		}
-  		this.view = view;
-  	}
+		loadView : function(view) {
+			if(this.view) {
+				this.view.remove();
+			}
+			this.view = view;
+		}
 
-  });
+	});
 
 })();

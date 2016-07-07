@@ -1,5 +1,5 @@
 (function () {
-  'use strict';
+	'use strict';
 
 	var Backbone = require('backbone');
 	var jQuery = require('jquery');
@@ -10,8 +10,8 @@
 	var router = new Router();
 
 	Backbone.$("body").on("click", ".back-button", function (event) {
-	    event.preventDefault();
-	    window.history.back();
+		event.preventDefault();
+		window.history.back();
 	});
 
 	Backbone.history.start();
