@@ -17,8 +17,7 @@
 		},
 
 		initialize: function(options){
-			this.listenTo(this.collection, 'change', this.render);
-			this.listenTo(this.collection, 'add', this.render);
+			this.listenTo(this.collection, 'change remove', this.render);
 		},
 
 		// render template

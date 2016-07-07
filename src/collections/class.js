@@ -20,7 +20,7 @@
 			var sum = this.reduce(function(total, student) {
 				return total + student.get('testScore');
 			}, 0);
-			return sum / this.size();
+			return this.size() ? sum / this.size() : 0;
 		},
 
 		// return minimum test score from all students
