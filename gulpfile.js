@@ -3,6 +3,7 @@ var gulp = require('gulp'),
 		uglify = require('gulp-uglify'),
 		clean = require('gulp-clean'),
 		inject = require('gulp-inject'),
+		less = require('gulp-less'),
 		jshint = require('gulp-jshint'),
 		gulpsync = require('gulp-sync')(gulp),
 		sourcemaps = require('gulp-sourcemaps'),
@@ -49,7 +50,6 @@ gulp.task('clean', function() {
 // Build all scripts
 gulp.task('browserify', ['lint'], function() {
 	var bundleStream = browserify({
-		//transform: [hbsfy],
 		basedir: paths.src.base,
 		entries: paths.src.indexJS,
 		insertGlobals: isDevelopment, 
@@ -94,14 +94,36 @@ gulp.task('browserify-test', ['lint-test'], function() {
 });
 
 // Minify and source map all css
-gulp.task('minify-css', function() {
-	return gulp.src(paths.src.base+'/**/*.css')
+gulp.task('minify-css', ['minify-css-includes', 'less'], function() {
+	return gulp.src(paths.src.base+'/**/*.css', {base: paths.src.base})
 		.on('error', onError)
 		.pipe(sourcemaps.init())
 		.pipe(cleanCSS())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest(paths.src.dest));
 
+});
+
+// Minify and source map all library css
+gulp.task('minify-css-includes', function() {
+	return gulp.src(paths.src.includeCSS)
+		.on('error', onError)
+		.pipe(sourcemaps.init())
+		.pipe(cleanCSS())
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest(paths.src.dest+paths.build.cssDir));
+
+});
+
+// Compile less and minify
+gulp.task('less', function() {
+	return gulp.src(paths.src.base+'/less/*.less')
+		.on('error', onError)
+		.pipe(sourcemaps.init())
+		.pipe(less())
+		.pipe(cleanCSS())
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest(paths.src.dest+paths.build.cssDir));
 });
 
 // Copy all other files to dist directly
@@ -235,6 +257,7 @@ gulp.task('browser-sync', ['build-all'], function() {
 gulp.task('watch', gulpsync.sync(['browser-sync', 'test']), function() {
 	gulp.watch(paths.src.base+'/**/*.js', ['update-scripts']);
 	gulp.watch(paths.src.base+'/**/*.css', ['injectIndex']);
+	gulp.watch(paths.src.base+'/**/*.less', ['injectIndex']);
 	gulp.watch(paths.src.base+'/**/*.hbs', ['update-scripts']);
 	gulp.watch(paths.test.base+'/**/*.js', ['update-test']);
 	gulp.watch(paths.test.base+'/**/*.html', ['injectIndex-test']);

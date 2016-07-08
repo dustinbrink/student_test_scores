@@ -1,3 +1,8 @@
+/* Colors */
+@color-gray:  #f9f9f9;
+@color-pink: LightPink;
+
+
 #container {
 	position: relative;
 	display: block;
@@ -17,11 +22,11 @@
 }
 
 .backgrid tbody tr:nth-child(even) {
-	background-color: #f9f9f9;
+	background-color: @color-gray;
 }
 
 .backgrid tbody tr.failing-grade {
-	background-color: LightPink;
+	background-color: @color-pink;
 }
 
 .backgrid th {
