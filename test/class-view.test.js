@@ -24,25 +24,6 @@ describe('Class View', function (){
 		it('should exist', function() {
 			view.should.be.defined;
 		});
-
-		// describe('when view is rendered', function () {
-		// 	beforeEach(function () {
-		// 		view.render();
-		// 	});
-
-		// 	it ('should have new student form', function () {
-		// 		console.log(view.$el.find('.new-student'));
-		// 	});
-
-			// it ('should website field be empty', function () {
-			// 	expect(view.$el.find('input#website')).toHaveValue('');
-			// });
-
-			// it ('should feedback field with default feedback', function () {
-			// 	expect(view.$el.find('textarea#feedback')).toHaveValue('TDD is awesome..');
-			// });
-
-		// });
 	});
 
 });

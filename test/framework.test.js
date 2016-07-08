@@ -5,10 +5,7 @@ var expect = chai.expect;
 var assert = chai.assert;
 
 describe('Framework', function (){
-	before(function(){
-		// Stuff to do before the tests, like imports, what not
-	});
-
+	
 	describe('Mocha Chia', function(){
 		it('should be present', function() {
 			should.exist(chai);
@@ -29,7 +26,4 @@ describe('Framework', function (){
 		});
 	});
 
-	after(function () {
-		// Anything after the tests have finished
-	});
 });
