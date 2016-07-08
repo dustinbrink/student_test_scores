@@ -261,7 +261,6 @@ gulp.task('watch', gulpsync.sync(['browser-sync', 'test']), function() {
 	gulp.watch(paths.src.base+'/**/*.hbs', ['update-scripts']);
 	gulp.watch(paths.test.base+'/**/*.js', ['update-test']);
 	gulp.watch(paths.test.base+'/**/*.html', ['injectIndex-test']);
-	//gulp.watch(paths.src.dest+'**/*', ['test']);
 });
 
 
@@ -269,4 +268,3 @@ gulp.task('test', ['test-phantom']);
 gulp.task('update-scripts', gulpsync.sync(['update-test', 'browserify']));
 gulp.task('update-test',  gulpsync.sync(['browserify-test', 'test']));
 gulp.task('build-all', gulpsync.sync(['clean', ['injectIndex', 'injectIndex-test']]));
-//gulp.task('build-all', ['minify-css']);
