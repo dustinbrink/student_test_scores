@@ -1,5 +1,5 @@
 Prerequisites
-	A *nix type system for Cygwin (for Windows)
+	A *nix type system or Cygwin (for Windows)
 	NPM (node package manager) installed
 	Tested on Google Chrome, Firefox, Microsoft Edge
 
