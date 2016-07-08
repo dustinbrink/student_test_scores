@@ -54,6 +54,11 @@
 		}],
 
 		initialize: function(options) {
+			// require a collection
+			if (!this.collection) {
+				throw new Error('collection is required');
+			}
+
 			// init Backgrid subview
 			this.grid = new Backgrid.Grid({
 				row: GradedRow,

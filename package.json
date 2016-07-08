@@ -74,12 +74,15 @@
 		"boss": true,
 		"eqnull": true,
 		"browser": true,
+		"expr": true,
 		"globals": {
 			"require": true,
 			"describe": true,
 			"before": true,
 			"it": true,
-			"after": true
+			"after": true,
+			"beforeEach": true,
+			"afterEach": true
 		}
 	},
 	"gulpPaths": {
